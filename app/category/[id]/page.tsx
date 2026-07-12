@@ -98,6 +98,11 @@ export default function CategoryPage() {
                   <div className="min-w-0">
                     <p className="text-lg font-extrabold text-cocoa">
                       {w.english}
+                      {w.partOfSpeech ? (
+                        <span className="ml-2 align-middle text-sm font-semibold italic text-cocoa-light">
+                          {w.partOfSpeech}
+                        </span>
+                      ) : null}
                     </p>
                     {w.thai ? (
                       <p className="text-coral-dark">{w.thai}</p>
@@ -128,6 +133,11 @@ export default function CategoryPage() {
                 {w.example ? (
                   <p className="mt-2 border-l-2 border-clay pl-3 text-sm italic text-cocoa-light">
                     “{w.example}”
+                  </p>
+                ) : null}
+                {w.usageNotes ? (
+                  <p className="mt-2 rounded-lg bg-sand/60 px-3 py-2 text-sm text-cocoa-light">
+                    💡 {w.usageNotes}
                   </p>
                 ) : null}
               </li>

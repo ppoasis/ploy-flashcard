@@ -20,7 +20,7 @@ function shuffle<T>(arr: T[]): T[] {
 }
 
 function meaningOf(w: Word): string {
-  return w.thai || w.definition;
+  return w.definition;
 }
 
 function formatTime(ms: number): string {
@@ -143,7 +143,7 @@ function QuizInner() {
             Not enough words to play yet.
           </p>
           <p className="mb-5">
-            You need at least 2 words that have a Thai meaning or definition.
+            You need at least 2 words that have an English definition.
           </p>
           <Link
             href={categoryId ? `/word/new?category=${categoryId}` : "/word/new"}
@@ -226,10 +226,10 @@ function QuizInner() {
                   />
                 ))}
               </div>
-              {/* Meanings column */}
+              {/* Definitions column */}
               <div className="flex flex-col gap-3">
                 <p className="text-center text-xs font-bold uppercase tracking-wider text-cocoa-light">
-                  Meanings
+                  Definitions
                 </p>
                 {meaningTiles.map((w) => (
                   <Tile

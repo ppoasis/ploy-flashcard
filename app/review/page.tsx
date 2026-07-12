@@ -123,7 +123,7 @@ function ReviewInner() {
                   flipped ? "is-flipped" : ""
                 }`}
               >
-                {/* Front — English word */}
+                {/* Front — English word (+ part of speech) */}
                 <div className="flip-face absolute inset-0 flex flex-col items-center justify-center rounded-3xl bg-white p-6 text-center shadow-soft">
                   <span className="mb-3 rounded-full bg-sand px-3 py-1 text-xs font-bold uppercase tracking-wider text-coral-dark">
                     Word
@@ -131,27 +131,40 @@ function ReviewInner() {
                   <p className="text-4xl font-extrabold text-cocoa">
                     {current.english}
                   </p>
-                  {current.example ? (
-                    <p className="mt-6 max-w-xs text-sm italic text-cocoa-light">
-                      “{current.example}”
-                    </p>
+                  {current.partOfSpeech ? (
+                    <span className="mt-4 rounded-full border border-clay px-3 py-1 text-sm font-semibold italic text-cocoa-light">
+                      {current.partOfSpeech}
+                    </span>
                   ) : null}
                 </div>
 
-                {/* Back — meaning */}
-                <div className="flip-face flip-back absolute inset-0 flex flex-col items-center justify-center rounded-3xl bg-coral p-6 text-center text-cream shadow-soft">
-                  <span className="mb-3 rounded-full bg-cream/20 px-3 py-1 text-xs font-bold uppercase tracking-wider">
+                {/* Back — reveal: meaning, example, usage notes */}
+                <div className="flip-face flip-back absolute inset-0 flex flex-col items-center justify-center gap-3 overflow-y-auto rounded-3xl bg-coral p-6 text-center text-cream shadow-soft">
+                  <span className="rounded-full bg-cream/20 px-3 py-1 text-xs font-bold uppercase tracking-wider">
                     Meaning
                   </span>
                   {current.thai ? (
                     <p className="text-3xl font-extrabold">{current.thai}</p>
                   ) : null}
                   {current.definition ? (
-                    <p className="mt-3 max-w-xs text-cream/90">
+                    <p className="max-w-xs text-cream/90">
                       {current.definition}
                     </p>
                   ) : null}
-                  {!current.thai && !current.definition ? (
+                  {current.example ? (
+                    <p className="max-w-xs border-t border-cream/25 pt-3 text-sm italic text-cream/90">
+                      “{current.example}”
+                    </p>
+                  ) : null}
+                  {current.usageNotes ? (
+                    <p className="max-w-xs rounded-xl bg-cream/15 px-3 py-2 text-sm text-cream/90">
+                      💡 {current.usageNotes}
+                    </p>
+                  ) : null}
+                  {!current.thai &&
+                  !current.definition &&
+                  !current.example &&
+                  !current.usageNotes ? (
                     <p className="text-cream/80">No meaning added yet.</p>
                   ) : null}
                 </div>

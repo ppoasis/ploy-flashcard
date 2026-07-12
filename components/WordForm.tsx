@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useData } from "@/lib/storage";
-import type { Word } from "@/lib/types";
+import { PARTS_OF_SPEECH, type PartOfSpeech, type Word } from "@/lib/types";
 
 interface Props {
   /** Existing word when editing. */
@@ -21,9 +21,13 @@ export default function WordForm({ word, defaultCategoryId }: Props) {
   const { categories, addWord, updateWord, addCategory } = useData();
 
   const [english, setEnglish] = useState(word?.english ?? "");
+  const [partOfSpeech, setPartOfSpeech] = useState<PartOfSpeech | "">(
+    word?.partOfSpeech ?? ""
+  );
   const [definition, setDefinition] = useState(word?.definition ?? "");
   const [thai, setThai] = useState(word?.thai ?? "");
   const [example, setExample] = useState(word?.example ?? "");
+  const [usageNotes, setUsageNotes] = useState(word?.usageNotes ?? "");
   const [categoryId, setCategoryId] = useState(
     word?.categoryId ?? defaultCategoryId ?? categories[0]?.id ?? ""
   );
@@ -64,6 +68,8 @@ export default function WordForm({ word, defaultCategoryId }: Props) {
       thai: thai.trim(),
       example: example.trim(),
       categoryId: finalCategoryId,
+      partOfSpeech,
+      usageNotes: usageNotes.trim(),
     };
 
     if (word) {
@@ -88,6 +94,27 @@ export default function WordForm({ word, defaultCategoryId }: Props) {
           className={fieldClass}
           autoFocus={!word}
         />
+      </div>
+
+      <div>
+        <label className={labelClass} htmlFor="partOfSpeech">
+          Part of speech
+        </label>
+        <select
+          id="partOfSpeech"
+          value={partOfSpeech}
+          onChange={(e) =>
+            setPartOfSpeech(e.target.value as PartOfSpeech | "")
+          }
+          className={fieldClass}
+        >
+          <option value="">— Not set —</option>
+          {PARTS_OF_SPEECH.map((pos) => (
+            <option key={pos} value={pos}>
+              {pos}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div>
@@ -126,6 +153,21 @@ export default function WordForm({ word, defaultCategoryId }: Props) {
           value={example}
           onChange={(e) => setExample(e.target.value)}
           placeholder="She stayed resilient through every setback."
+          rows={2}
+          className={fieldClass}
+        />
+      </div>
+
+      <div>
+        <label className={labelClass} htmlFor="usageNotes">
+          Usage notes{" "}
+          <span className="font-normal text-cocoa-light">(optional)</span>
+        </label>
+        <textarea
+          id="usageNotes"
+          value={usageNotes}
+          onChange={(e) => setUsageNotes(e.target.value)}
+          placeholder="e.g. This phrase must be followed by a noun."
           rows={2}
           className={fieldClass}
         />
